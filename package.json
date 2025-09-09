@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "main": "mcp-supabase/index.js",
+  "scripts": {
+    "start": "node mcp-supabase/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.5",
+    "@supabase/supabase-js": "^2.57.0",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
+  }
+}

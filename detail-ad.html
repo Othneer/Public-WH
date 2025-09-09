@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listing Detail - The Miniature Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <style>
+        /* Custom styles for detail page */
+        .image-gallery-thumbnail {
+            transition: all 0.3s ease;
+        }
+        .image-gallery-thumbnail:hover {
+            transform: scale(1.05);
+            border-color: #3b82f6;
+        }
+        .image-gallery-thumbnail.active {
+            border-color: #3b82f6;
+            border-width: 2px;
+        }
+        .condition-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .condition-painted { background-color: #8b5cf6; color: white; }
+        .condition-new { background-color: #10b981; color: white; }
+        .condition-used { background-color: #6b7280; color: white; }
+        .condition-professional { background-color: #f59e0b; color: white; }
+        .form-overlay { transition: all 0.3s ease; }
+        .form-overlay.hidden { opacity: 0; pointer-events: none; }
+        .main-image-container { aspect-ratio: 4/3; overflow: hidden; }
+        @media (max-width: 768px) {
+            .main-image-container { aspect-ratio: 1/1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center">
+                    <h1 class="text-xl font-bold text-slate-900">The Miniature Hub</h1>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">Home</a>
+                    <a href="browse.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">Browse</a>
+                    <a href="how-it-works.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">How it Works</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="login.html">
+                        <button class="bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-md font-medium flex items-center">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>Log In
+                        </button>
+                    </a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="border border-gray-300 hover:bg-gray-50 text-gray-700 p-2 rounded-md">
+                        <i data-lucide="menu" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden py-4 border-t border-gray-200">
+                <div class="space-y-2">
+                    <a href="index.html" class="block px-3 py-2 text-sm font-medium text-slate-600">Home</a>
+                    <a href="browse.html" class="block px-3 py-2 text-sm font-medium text-slate-600">Browse</a>
+                    <a href="how-it-works.html" class="block px-3 py-2 text-sm font-medium text-slate-600">How it Works</a>
+                    <a href="login.html" class="block px-3 py-2 text-sm font-medium text-slate-600">Log In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                <a href="index.html" class="hover:text-gray-700">Home</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <a href="browse.html" class="hover:text-gray-700">Browse</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="text-gray-900" id="breadcrumb-title">Listing Title</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="min-h-screen bg-gray-50 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-6">
+                <a href="browse.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>Back to Browse
+                </a>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 mb-12">
+                <!-- Images -->
+                <div class="space-y-4">
+                    <div class="main-image-container bg-white rounded-lg border border-gray-200 overflow-hidden">
+                        <img id="main-image" src="placeholder.jpg" class="w-full h-full object-cover cursor-pointer hover:scale-105 transition-transform duration-300" />
+                    </div>
+                    <div class="flex space-x-3" id="image-thumbnails"></div>
+                </div>
+
+                <!-- Ad Information -->
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex items-start justify-between mb-2">
+                            <h1 id="listing-title" class="text-3xl font-bold text-slate-900">Placeholder Title</h1>
+                            <button id="favorite-btn" class="text-gray-400 hover:text-red-500 transition-colors" onclick="toggleFavorite()">
+                                <i data-lucide="heart" class="w-6 h-6"></i>
+                            </button>
+                        </div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span id="listing-condition" class="condition-badge condition-painted">Painted</span>
+                            <span id="listing-category" class="condition-badge condition-new">Category</span>
+                            <span class="text-sm text-gray-500">•</span>
+                            <span id="listing-location" class="text-sm text-gray-500">Stockholm, Sweden</span>
+                        </div>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <div class="flex items-baseline space-x-2">
+                            <span id="listing-price" class="text-3xl font-bold text-slate-900">450 SEK</span>
+                            <span class="text-sm text-gray-500">Fixed Price</span>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1">No bidding required - buy now!</p>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="space-y-3">
+                        <button onclick="showBuyNowAlert()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 rounded-lg font-medium text-lg transition-colors">
+                            Buy Now
+                        </button>
+                        <button onclick="showSuggestPriceForm()" class="w-full bg-white text-blue-600 border border-blue-600 hover:bg-blue-50 py-3 px-6 rounded-lg font-medium transition-colors">
+                            Suggest Price
+                        </button>
+                    </div>
+
+                    <!-- Seller Information -->
+                    <div class="bg-white p-4 rounded-lg border border-gray-200">
+                        <h3 class="font-semibold text-slate-900 mb-3">Seller Information</h3>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div id="seller-avatar" class="w-10 h-10 bg-slate-200 rounded-full flex items-center justify-center">
+                                    <i data-lucide="user" class="w-5 h-5 text-slate-600"></i>
+                                </div>
+                                <div>
+                                    <p id="seller-name" class="font-medium text-slate-900">Placeholder Seller</p>
+                                    <div class="flex items-center space-x-1">
+                                        <div class="flex text-yellow-400">
+                                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+                                        </div>
+                                        <span class="text-sm text-gray-500">(120 ratings)</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="seller-profile.html" class="text-blue-600 hover:underline">View Profile</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="bg-white p-6 rounded-lg border border-gray-200 mb-12">
+                <h2 class="text-2xl font-semibold text-slate-900 mb-4">Description</h2>
+                <div class="prose text-slate-700 space-y-4" id="listing-description">
+                    <p>Placeholder description</p>
+                </div>
+            </div>
+
+            <!-- Similar Items -->
+            <div>
+                <h2 class="text-2xl font-semibold text-slate-900 mb-6">Similar Items</h2>
+                <div class="grid md:grid-cols-3 gap-6" id="similar-items"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-6 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+            <p>&copy; 2025 The Miniature Hub. All rights reserved.</p>
+            <div class="space-x-4 mt-2 md:mt-0">
+                <a href="#" class="hover:text-gray-700">Privacy</a>
+                <a href="#" class="hover:text-gray-700">Terms</a>
+                <a href="#" class="hover:text-gray-700">Help</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module">
+  import { supabase } from './supabaseClient.js';
+
+  const params = new URLSearchParams(window.location.search);
+  const listingId = params.get('id');
+
+  async function loadListing() {
+    const { data: listing, error } = await supabase
+      .from('listings')
+      .select(`
+        *,
+        profiles (username, full_name, avatar_url, location),
+        listing_images (id, url, created_at)
+      `)
+      .eq('id', listingId)
+      .single();
+
+    if (error || !listing) {
+      console.error(error);
+      alert('Failed to load listing');
+      return;
+    }
+
+    // ✅ Title & description
+    document.getElementById('listing-title').textContent = listing.title;
+    document.getElementById('breadcrumb-title').textContent = listing.title;
+    document.getElementById('listing-description').textContent = listing.description || '';
+    document.getElementById('listing-price').textContent = `${listing.price} ${listing.currency}`;
+    document.getElementById('listing-location').textContent = listing.profiles?.location || 'Unknown';
+
+    // ✅ Seller info
+    const sellerName = listing.profiles?.full_name || listing.profiles?.username || 'Unknown';
+    document.getElementById('seller-name').textContent = sellerName;
+    const avatarContainer = document.getElementById('seller-avatar');
+    if (listing.profiles?.avatar_url) {
+      avatarContainer.innerHTML = `<img src="${listing.profiles.avatar_url}" alt="Seller avatar" class="w-10 h-10 rounded-full object-cover">`;
+    }
+
+    // ✅ Images (main + thumbnails)
+    const mainImage = document.getElementById('main-image');
+    const thumbs = document.getElementById('image-thumbnails');
+    thumbs.innerHTML = '';
+
+    let images = [];
+    if (listing.listing_images && listing.listing_images.length > 0) {
+      images = listing.listing_images.map(img => img.url);
+    } else if (listing.image_url) {
+      images = [listing.image_url];
+    }
+
+    if (images.length > 0) {
+      mainImage.src = images[0];
+    }
+
+    images.forEach((url, i) => {
+      const btn = document.createElement('button');
+      btn.className = `image-gallery-thumbnail w-20 h-20 rounded-lg border-2 overflow-hidden ${i===0 ? 'active border-blue-500' : 'border-gray-300'}`;
+      btn.innerHTML = `<img src="${url}" class="w-full h-full object-cover"/>`;
+      btn.onclick = () => {
+        mainImage.src = url;
+        document.querySelectorAll('.image-gallery-thumbnail').forEach(el => el.classList.remove('active'));
+        btn.classList.add('active');
+      };
+      thumbs.appendChild(btn);
+    });
+
+    // ✅ Similar items (unchanged from your version)
+    const { data: recentListings } = await supabase
+      .from('listings')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    const similarContainer = document.getElementById('similar-items');
+    similarContainer.innerHTML = '';
+    recentListings.forEach(l => {
+      const div = document.createElement('a');
+      div.href = `detail-ad.html?id=${l.id}`;
+      div.className = 'block bg-gray-50 rounded-lg p-4 hover:shadow-md transition-shadow cursor-pointer';
+      div.innerHTML = `
+        <img src="${l.image_url}" alt="${l.title}" class="w-full h-32 object-cover rounded-md mb-3"/>
+        <h3 class="font-medium text-slate-900 mb-2">${l.title}</h3>
+        <p class="text-lg font-bold text-slate-800 mb-2">${l.price} ${l.currency}</p>
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-gray-500">${l.location || 'Unknown'}</span>
+          <span class="condition-badge condition-new text-xs">${l.condition}</span>
+        </div>
+      `;
+      similarContainer.appendChild(div);
+    });
+  }
+
+  loadListing();
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        function showBuyNowAlert() {
+            alert('Buy Now clicked!');
+        }
+
+        function showSuggestPriceForm() {
+            alert('Suggest Price clicked!');
+        }
+
+        function toggleFavorite() {
+            alert('Favorite toggled!');
+        }
+    </script>
+    <script>lucide.replace();</script>
+</body>
+</html>

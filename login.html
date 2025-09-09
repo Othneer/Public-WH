@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In or Sign Up - The Miniature Hub</title>
+    <meta name="description" content="Log in or create an account on The Miniature Hub - The leading marketplace for Warhammer and tabletop miniatures. Buy and sell unique miniatures easily and securely.">
+    <meta name="keywords" content="warhammer, miniatures, tabletop, buy, sell, marketplace, log in, sign up">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Log In or Sign Up - The Miniature Hub">
+    <meta property="og:description" content="Log in or create an account on the leading marketplace for Warhammer and tabletop miniatures.">
+    <meta property="og:type" content="website">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script type="module" src="auth.js"></script>
+    <style>
+        .form-input:focus {
+            border-color: #1e293b;
+            box-shadow: 0 0 0 3px rgba(30, 41, 59, 0.1);
+        }
+        .toggle-form {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center">
+                    <h1 class="text-xl font-bold text-slate-900">The Miniature Hub</h1>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">Home</a>
+                    <a href="browse.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">Browse</a>
+                    <a href="how-it-works.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">How it Works</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="border border-gray-300 hover:bg-gray-50 text-gray-700 p-2 rounded-md">
+                        <i data-lucide="menu" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden hidden py-4 border-t border-gray-200">
+                <div class="space-y-2">
+                    <a href="index.html" class="block px-3 py-2 text-sm font-medium text-slate-900 bg-slate-100">Home</a>
+                    <a href="browse.html" class="block px-3 py-2 text-sm font-medium text-slate-600">Browse</a>
+                    <a href="how-it-works.html" class="block px-3 py-2 text-sm font-medium text-slate-600">How it Works</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+            <!-- Header -->
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-slate-900 mb-2">Welcome Back</h2>
+                <p class="text-slate-600">Log in or create an account to get started</p>
+            </div>
+
+            <!-- Form Toggle Buttons -->
+            <div class="flex bg-gray-100 p-1 rounded-lg">
+                <button id="login-tab" class="flex-1 py-2 px-4 text-sm font-medium rounded-md bg-white text-slate-900 shadow-sm">
+                    Log In
+                </button>
+                <button id="signup-tab" class="flex-1 py-2 px-4 text-sm font-medium rounded-md text-slate-600 hover:text-slate-900">
+                    Sign Up
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="toggle-form space-y-6">
+                <div>
+                    <label for="login-email" class="block text-sm font-medium text-slate-700 mb-2">
+                        Email Address
+                    </label>
+                    <input 
+                        id="login-email"
+                        name="email" 
+                        type="email" 
+                        required 
+                        class="form-input w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none"
+                        placeholder="your@email.com"
+                    >
+                </div>
+
+                <div>
+                    <label for="login-password" class="block text-sm font-medium text-slate-700 mb-2">
+                        Password
+                    </label>
+                    <input 
+                        id="login-password"
+                        name="password" 
+                        type="password" 
+                        required 
+                        class="form-input w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none"
+                        placeholder="••••••••"
+                    >
+                </div>
+
+                <!-- Error Message -->
+                <div id="login-error" class="hidden text-red-600 text-sm bg-red-50 p-3 rounded-md"></div>
+
+                <!-- Success Message -->
+                <div id="login-success" class="hidden text-green-600 text-sm bg-green-50 p-3 rounded-md"></div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input 
+                            id="remember-me" 
+                            name="remember-me" 
+                            type="checkbox" 
+                            class="h-4 w-4 text-slate-900 focus:ring-slate-500 border-gray-300 rounded"
+                        >
+                        <label for="remember-me" class="ml-2 block text-sm text-slate-700">
+                            Remember me
+                        </label>
+                    </div>
+                    <button type="button" id="forgot-password-btn" class="text-sm text-blue-600 hover:text-blue-500">
+                        Forgot password?
+                    </button>
+                </div>
+
+                <button 
+                    type="submit" 
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                >
+                    Log In
+                </button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="toggle-form space-y-6 hidden">
+                <div>
+                    <label for="signup-name" class="block text-sm font-medium text-slate-700 mb-2">
+                        Name
+                    </label>
+                    <input 
+                        id="signup-name"
+                        name="name" 
+                        type="text" 
+                        required 
+                        class="form-input w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none"
+                        placeholder="Your name"
+                    >
+                </div>
+
+                <div>
+                    <label for="signup-email" class="block text-sm font-medium text-slate-700 mb-2">
+                        Email Address
+                    </label>
+                    <input 
+                        id="signup-email"
+                        name="email" 
+                        type="email" 
+                        required 
+                        class="form-input w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none"
+                        placeholder="your@email.com"
+                    >
+                </div>
+
+                <div>
+                    <label for="signup-password" class="block text-sm font-medium text-slate-700 mb-2">
+                        Password
+                    </label>
+                    <input 
+                        id="signup-password"
+                        name="password" 
+                        type="password" 
+                        required 
+                        class="form-input w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none"
+                        placeholder="Minimum 8 characters"
+                    >
+                </div>
+
+                <div>
+                    <label for="signup-confirm-password" class="block text-sm font-medium text-slate-700 mb-2">
+                        Confirm Password
+                    </label>
+                    <input 
+                        id="signup-confirm-password"
+                        name="confirm-password" 
+                        type="password" 
+                        required 
+                        class="form-input w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none"
+                        placeholder="Repeat password"
+                    >
+                </div>
+
+                <!-- Password strength indicator -->
+                <div id="password-strength" class="hidden">
+                    <div class="text-sm text-slate-600 mb-2">Password strength:</div>
+                    <div class="flex space-x-2">
+                        <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div id="strength-bar" class="h-full transition-all duration-300"></div>
+                        </div>
+                        <span id="strength-text" class="text-sm text-slate-600"></span>
+                    </div>
+                    <div id="password-requirements" class="text-xs text-slate-500 mt-2 space-y-1"></div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="signup-error" class="hidden text-red-600 text-sm bg-red-50 p-3 rounded-md"></div>
+
+                <!-- Success Message -->
+                <div id="signup-success" class="hidden text-green-600 text-sm bg-green-50 p-3 rounded-md"></div>
+
+                <div class="flex items-center">
+                    <input 
+                        id="terms" 
+                        name="terms" 
+                        type="checkbox" 
+                        required
+                        class="h-4 w-4 text-slate-900 focus:ring-slate-500 border-gray-300 rounded"
+                    >
+                    <label for="terms" class="ml-2 block text-sm text-slate-700">
+                        I accept the <a href="#" class="text-blue-600 hover:text-blue-500">Terms of Service</a> and <a href="#" class="text-blue-600 hover:text-blue-500">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <button 
+                    type="submit" 
+                    class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-slate-900 hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
+                >
+                    Create Account
+                </button>
+            </form>
+
+            <!-- Footer Links -->
+            <div class="text-center text-sm text-slate-600">
+                <p>Already have an account? <a href="#" id="switch-to-login" class="text-blue-600 hover:text-blue-500 font-medium">Log in here</a></p>
+                <p class="mt-2">New user? <a href="#" id="switch-to-signup" class="text-blue-600 hover:text-blue-500 font-medium">Sign up here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center text-slate-600">
+                <p>&copy; 2024 The Miniature Hub. All rights reserved.</p>
+                <div class="mt-2 space-x-4 text-sm">
+                    <a href="#" class="hover:text-slate-900">Terms of Service</a>
+                    <a href="#" class="hover:text-slate-900">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-900">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module">
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = this.querySelector('i');
+            
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                icon.setAttribute('data-lucide', 'x');
+            } else {
+                menu.classList.add('hidden');
+                icon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        });
+
+        // Form toggle functionality
+        const loginTab = document.getElementById('login-tab');
+        const signupTab = document.getElementById('signup-tab');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const switchToLogin = document.getElementById('switch-to-login');
+        const switchToSignup = document.getElementById('switch-to-signup');
+
+        function showLoginForm() {
+            loginTab.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+            loginTab.classList.remove('text-slate-600');
+            signupTab.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+            signupTab.classList.add('text-slate-600');
+            loginForm.classList.remove('hidden');
+            signupForm.classList.add('hidden');
+        }
+
+        function showSignupForm() {
+            signupTab.classList.add('bg-white', 'text-slate-900', 'shadow-sm');
+            signupTab.classList.remove('text-slate-600');
+            loginTab.classList.remove('bg-white', 'text-slate-900', 'shadow-sm');
+            loginTab.classList.add('text-slate-600');
+            signupForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        }
+
+        loginTab.addEventListener('click', showLoginForm);
+        signupTab.addEventListener('click', showSignupForm);
+        switchToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            showLoginForm();
+        });
+        switchToSignup.addEventListener('click', (e) => {
+            e.preventDefault();
+            showSignupForm();
+        });
+
+        // Import auth functions
+        import { signInUser, signUpUser, resetPassword, validatePassword, isValidEmail } from './auth.js';
+
+        // Form submission handling
+        loginForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Clear previous messages
+            hideMessages();
+            
+            // Validate inputs
+            if (!email || !password) {
+                showError('login-error', 'Please fill in all fields');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('login-error', 'Please enter a valid email address');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Signing in...';
+            submitBtn.disabled = true;
+            
+            try {
+                const result = await signInUser(email, password);
+                
+                if (result.success) {
+                    showSuccess('login-success', 'Login successful! Redirecting...');
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showError('login-error', result.error);
+                }
+            } catch (error) {
+                showError('login-error', 'An unexpected error occurred. Please try again.');
+                console.error('Login error:', error);
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        signupForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm-password').value;
+            const termsAccepted = document.getElementById('terms').checked;
+            
+            // Clear previous messages
+            hideMessages();
+            
+            // Validate inputs
+            if (!name || !email || !password || !confirmPassword) {
+                showError('signup-error', 'Please fill in all fields');
+                return;
+            }
+            
+            if (!isValidEmail(email)) {
+                showError('signup-error', 'Please enter a valid email address');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError('signup-error', 'Passwords do not match');
+                return;
+            }
+            
+            if (!termsAccepted) {
+                showError('signup-error', 'Please accept the Terms of Service and Privacy Policy');
+                return;
+            }
+            
+            // Validate password strength
+            const passwordValidation = validatePassword(password);
+            if (!passwordValidation.isValid) {
+                showError('signup-error', 'Password does not meet requirements');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Creating account...';
+            submitBtn.disabled = true;
+            
+            try {
+                const result = await signUpUser(email, password, name);
+                
+                if (result.success) {
+                    showSuccess('signup-success', 'Account created successfully! Redirecting to profile setup...');
+                    setTimeout(() => {
+                        window.location.href = 'profile-setup.html';
+                    }, 1500);
+                } else {
+                    showError('signup-error', result.error);
+                }
+            } catch (error) {
+                showError('signup-error', 'An unexpected error occurred. Please try again.');
+                console.error('Signup error:', error);
+            } finally {
+                // Reset button state
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Password strength indicator
+        const signupPassword = document.getElementById('signup-password');
+        const passwordStrength = document.getElementById('password-strength');
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthText = document.getElementById('strength-text');
+        const passwordRequirements = document.getElementById('password-requirements');
+
+        signupPassword.addEventListener('input', function() {
+            const password = this.value;
+            if (password.length > 0) {
+                passwordStrength.classList.remove('hidden');
+                updatePasswordStrength(password);
+            } else {
+                passwordStrength.classList.add('hidden');
+            }
+        });
+
+        function updatePasswordStrength(password) {
+            const validation = validatePassword(password);
+            const errors = validation.errors;
+            
+            // Update strength bar
+            let strength = 0;
+            if (password.length >= 8) strength += 25;
+            if (errors.hasUpperCase === false) strength += 25;
+            if (errors.hasLowerCase === false) strength += 25;
+            if (errors.hasNumbers === false) strength += 25;
+            
+            strengthBar.style.width = strength + '%';
+            
+            // Update strength text and color
+            if (strength <= 25) {
+                strengthBar.className = 'h-full transition-all duration-300 bg-red-500';
+                strengthText.textContent = 'Weak';
+                strengthText.className = 'text-sm text-red-600';
+            } else if (strength <= 50) {
+                strengthBar.className = 'h-full transition-all duration-300 bg-orange-500';
+                strengthText.textContent = 'Fair';
+                strengthText.className = 'text-sm text-orange-600';
+            } else if (strength <= 75) {
+                strengthBar.className = 'h-full transition-all duration-300 bg-yellow-500';
+                strengthText.textContent = 'Good';
+                strengthText.className = 'text-sm text-yellow-600';
+            } else {
+                strengthBar.className = 'h-full transition-all duration-300 bg-green-500';
+                strengthText.textContent = 'Strong';
+                strengthText.className = 'text-sm text-green-600';
+            }
+            
+            // Update requirements
+            passwordRequirements.innerHTML = `
+                <div class="${errors.tooShort ? 'text-red-500' : 'text-green-500'}">✓ At least 8 characters</div>
+                <div class="${errors.noUpperCase ? 'text-red-500' : 'text-green-500'}">✓ One uppercase letter</div>
+                <div class="${errors.noLowerCase ? 'text-red-500' : 'text-green-500'}">✓ One lowercase letter</div>
+                <div class="${errors.noNumbers ? 'text-red-500' : 'text-green-500'}">✓ One number</div>
+            `;
+        }
+
+        // Forgot password functionality
+        document.getElementById('forgot-password-btn').addEventListener('click', async function() {
+            const email = document.getElementById('login-email').value;
+            
+            if (!email || !isValidEmail(email)) {
+                showError('login-error', 'Please enter a valid email address first');
+                return;
+            }
+            
+            try {
+                const result = await resetPassword(email);
+                if (result.success) {
+                    showSuccess('login-success', 'Password reset email sent! Please check your inbox.');
+                } else {
+                    showError('login-error', result.error);
+                }
+            } catch (error) {
+                showError('login-error', 'An unexpected error occurred. Please try again.');
+                console.error('Password reset error:', error);
+            }
+        });
+
+        // Utility functions
+        function showError(elementId, message) {
+            hideMessages();
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function showSuccess(elementId, message) {
+            hideMessages();
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.classList.remove('hidden');
+        }
+
+        function hideMessages() {
+            document.getElementById('login-error').classList.add('hidden');
+            document.getElementById('login-success').classList.add('hidden');
+            document.getElementById('signup-error').classList.add('hidden');
+            document.getElementById('signup-success').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

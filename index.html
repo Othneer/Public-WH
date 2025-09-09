@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Miniature Hub - Warhammer Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script type="module" src="app.js"></script>
+    <style>
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center">
+                    <h1 class="text-xl font-bold text-slate-900">The Miniature Hub</h1>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-sm font-medium text-slate-900">Home</a>
+                    <a href="browse.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">Browse</a>
+                    <a href="how-it-works.html" class="text-sm font-medium text-slate-600 hover:text-slate-900">How it Works</a>
+                </div>
+
+                <!-- User Actions -->
+                <div class="hidden md:flex items-center space-x-4 user-actions">
+                    <a href="login.html">
+                        <button class="bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-md font-medium flex items-center">
+                            <i data-lucide="user" class="w-4 h-4 mr-2"></i>
+                            Log In
+                        </button>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="border border-gray-300 hover:bg-gray-50 text-gray-700 p-2 rounded-md">
+                        <i data-lucide="menu" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="md:hidden hidden py-4 border-t border-gray-200">
+                <div class="space-y-2">
+                    <a href="index.html" class="block px-3 py-2 text-sm font-medium text-slate-900 bg-slate-100">Home</a>
+                    <a href="browse.html" class="block px-3 py-2 text-sm font-medium text-slate-600">Browse</a>
+                    <a href="how-it-works.html" class="block px-3 py-2 text-sm font-medium text-slate-600">How it Works</a>
+                    <a href="login.html" class="block px-3 py-2 text-sm font-medium text-slate-600">Log In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative bg-white">
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-10">
+                <!-- Content -->
+                <div class="flex flex-col justify-center py-20 lg:py-32">
+                    <div class="space-y-6">
+                        <h1 class="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+                            Buy & Sell Unique Miniatures
+                        </h1>
+                        
+                        <p class="text-xl text-slate-600 leading-relaxed max-w-lg">
+                            The ultimate marketplace for Warhammer, Age of Sigmar, and all kinds of tabletop figures. 
+                            Join thousands of players trading and selling their armies.
+                        </p>
+                    </div>
+
+                    <!-- Call to Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 mt-8 max-w-lg">
+                        <a href="browse.html" class="flex-1">
+                            <button class="w-full bg-slate-900 hover:bg-slate-800 text-white py-4 px-6 rounded-md font-medium text-lg transition-colors duration-200 flex items-center justify-center h-14">
+                                <i data-lucide="eye" class="w-5 h-5 mr-2"></i>
+                                Browse Miniatures
+                            </button>
+                        </a>
+                        <a href="login.html" class="flex-1">
+                            <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-md font-medium text-lg transition-colors duration-200 flex items-center justify-center h-14">
+                                <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                                Start Selling
+                            </button>
+                        </a>
+                    </div>
+                    
+                    <!-- Trust Indicators -->
+                    <div class="mt-8 flex items-center justify-center space-x-6 text-sm text-slate-600">
+                        <div class="flex items-center">
+                            <i data-lucide="shield-check" class="w-4 h-4 mr-1 text-green-600"></i>
+                            <span>Secure Payments</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="tag" class="w-4 h-4 mr-1 text-blue-600"></i>
+                            <span>Free Listings</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i data-lucide="users" class="w-4 h-4 mr-1 text-purple-600"></i>
+                            <span>Community Driven</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="hidden lg:block relative">
+                    <div class="absolute inset-0 h-full w-full">
+                        <img 
+                            src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/d607969dc_jack-b-hRwrvvZHk70-unsplash.jpg"
+                            alt="Warhammer miniatures collection"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Listings -->
+    <section class="py-16 bg-white" id="featured-listings">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Featured Miniatures</h2>
+                <p class="text-lg text-slate-600">Discover premium painted models and rare finds</p>
+            </div>
+
+            <div id="listings-container" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Listings will be loaded dynamically -->
+                <div class="col-span-full text-center py-12">
+                    <i data-lucide="loader-2" class="w-8 h-8 text-gray-400 mx-auto mb-4 animate-spin"></i>
+                    <p class="text-gray-500">Loading listings...</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <a href="browse.html">
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-md font-medium">
+                        View All Listings
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Showcase -->
+    <section class="py-16 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Browse by Category</h2>
+                <p class="text-lg text-slate-600">Find miniatures for your favorite game systems</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <a href="browse.html?category=warhammer-40k" class="group block">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="relative h-48">
+                            <img 
+                                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/cc3d9dcc6_mathieu-andrieux-XRZxrcpgXKs-unsplash.jpg"
+                                alt="Warhammer 40,000"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Warhammer 40,000</h3>
+                            <p class="text-slate-600 mb-3">The grimdark future of the 41st millennium</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-slate-500">1247 listings</span>
+                                <span class="text-blue-600 hover:text-blue-700 font-medium">Browse →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Category 2 -->
+                <a href="browse.html?category=age-of-sigmar" class="group block">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="relative h-48">
+                            <img 
+                                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/6ffe90372_mathieu-andrieux-wnpdXqaYTsA-unsplash.jpg"
+                                alt="Age of Sigmar"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Age of Sigmar</h3>
+                            <p class="text-slate-600 mb-3">Epic fantasy battles in the Mortal Realms</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-slate-500">892 listings</span>
+                                <span class="text-blue-600 hover:text-blue-700 font-medium">Browse →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Category 3 -->
+                <a href="browse.html?category=lord-of-the-rings" class="group block">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="relative h-48">
+                            <img 
+                                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/a3c537733_mathieu-andrieux-N1LuUyeINAY-unsplash.jpg"
+                                alt="Lord of the Rings"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Lord of the Rings</h3>
+                            <p class="text-slate-600 mb-3">Middle-earth strategy battle game</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-slate-500">456 listings</span>
+                                <span class="text-blue-600 hover:text-blue-700 font-medium">Browse →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Category 4 -->
+                <a href="browse.html?category=other-games" class="group block">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                        <div class="relative h-48">
+                            <img 
+                                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/cdec203ea_anne-nygard-phAfD6H0ZDg-unsplash.jpg"
+                                alt="Other Games"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            />
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors"></div>
+                        </div>
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Other Games</h3>
+                            <p class="text-slate-600 mb-3">Dungeons & Dragons, Star Wars, and more</p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-slate-500">234 listings</span>
+                                <span class="text-blue-600 hover:text-blue-700 font-medium">Browse →</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="font-bold text-lg mb-4 text-white">The Miniature Hub</h4>
+                    <p class="text-slate-300">The ultimate destination for trading and buying Warhammer miniatures and other figures.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Categories</h4>
+                    <ul class="space-y-2 text-slate-300">
+                        <li><a href="browse.html" class="hover:text-white transition-colors">Warhammer 40,000</a></li>
+                        <li><a href="browse.html" class="hover:text-white transition-colors">Age of Sigmar</a></li>
+                        <li><a href="browse.html" class="hover:text-white transition-colors">Blood Bowl</a></li>
+                        <li><a href="browse.html" class="hover:text-white transition-colors">Necromunda</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">For Sellers</h4>
+                    <ul class="space-y-2 text-slate-300">
+                        <li><a href="create-listing.html" class="hover:text-white transition-colors">Create Listing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Seller Guidelines</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Photography Tips</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Pricing Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4 text-white">Support</h4>
+                    <ul class="space-y-2 text-slate-300">
+                        <li><a href="help-center.html" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-600 mt-12 pt-8 text-center text-slate-300">
+                <p>&copy; 2024 The Miniature Hub. Built for the community, by the community.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
+</body>
+</html>
+
